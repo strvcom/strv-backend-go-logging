@@ -24,6 +24,10 @@ func TestNewLogger(t *testing.T) {
 			shouldPanic: false,
 		},
 		{
+			cfg:         Config{},
+			shouldPanic: true,
+		},
+		{
 			cfg: Config{
 				Level:       logLevel,
 				Encoding:    "slm",

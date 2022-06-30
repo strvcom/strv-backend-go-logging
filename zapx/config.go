@@ -36,11 +36,26 @@ type Config struct {
 
 func prepareConfig(src Config, dest *zap.Config) error {
 	dest.Level = src.Level
+
 	dest.DisableCaller = src.DisableCaller
 	dest.DisableStacktrace = src.DisableStacktrace
-	dest.Encoding = src.Encoding
-	dest.OutputPaths = src.OutputPaths
-	dest.ErrorOutputPaths = src.ErrorOutputPaths
-	dest.InitialFields = src.InitialFields
+
+	if src.Encoding != "" {
+		dest.Encoding = src.Encoding
+	}
+
+	if len(src.OutputPaths) != 0 {
+		dest.OutputPaths = src.OutputPaths
+	}
+
+	if len(src.ErrorOutputPaths) != 0 {
+		dest.ErrorOutputPaths = src.ErrorOutputPaths
+	}
+
+	if len(src.InitialFields) != 0 {
+		dest.InitialFields = src.InitialFields
+
+	}
+
 	return nil
 }
