@@ -1,6 +1,6 @@
-//go:build dev
+//go:build !dev
 
-package zapx
+package zap
 
 import (
 	"testing"
