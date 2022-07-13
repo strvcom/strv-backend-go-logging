@@ -1,16 +1,23 @@
-//go:build !dev
+//go:build dev
 
-package zapx
+package zap
 
 import (
 	"fmt"
 
 	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 )
 
 // CreateLogger is a wrapping constructor which produces zap.Logger in a customised form based on provided config.
+// Development logger provides color separated logs by log level.
 func CreateLogger(config Config) (*zap.Logger, error) {
-	c := zap.NewProductionConfig()
+	ec := zap.NewDevelopmentEncoderConfig()
+	ec.EncodeLevel = zapcore.CapitalColorLevelEncoder
+
+	c := zap.NewDevelopmentConfig()
+	c.EncoderConfig = ec
+
 	if err := prepareConfig(config, &c); err != nil {
 		return nil, fmt.Errorf("preparing config: %w", err)
 	}
@@ -23,7 +30,7 @@ func CreateLogger(config Config) (*zap.Logger, error) {
 }
 
 // MustCreateLogger is a wrapping constructor which produces zap.Logger in a customised form based on provided config.
-// It panics if creation is unsuccessful.
+// Development logger provides color separated logs by log level. It panics if creation is unsuccessful.
 func MustCreateLogger(config Config) *zap.Logger {
 	l, err := CreateLogger(config)
 	if err != nil {

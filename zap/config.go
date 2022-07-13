@@ -1,9 +1,10 @@
-package zapx
+package zap
 
 import (
 	"go.uber.org/zap"
 )
 
+// Config contains a subset of the zap configuration.
 type Config struct {
 	// Level is the minimum enabled logging level. Note that this is a dynamic
 	// level, so calling Config.Level.SetLevel will atomically change the log
