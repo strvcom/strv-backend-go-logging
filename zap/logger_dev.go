@@ -17,6 +17,7 @@ func CreateLogger(config Config) (*zap.Logger, error) {
 
 	c := zap.NewDevelopmentConfig()
 	c.EncoderConfig = ec
+	setTimeEncoder(&c)
 
 	if err := prepareConfig(config, &c); err != nil {
 		return nil, fmt.Errorf("preparing config: %w", err)
