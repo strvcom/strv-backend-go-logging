@@ -1,7 +1,14 @@
 package zap
 
 import (
+	"time"
+
 	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
+)
+
+const (
+	timeKey = "time"
 )
 
 // Config contains a subset of the zap configuration.
@@ -21,6 +28,9 @@ type Config struct {
 	// "console", as well as any third-party encodings registered via
 	// RegisterEncoder.
 	Encoding string `json:"encoding"`
+	// EncoderConfig sets options for the chosen encoder. See
+	// zapcore.EncoderConfig for details.
+	EncoderConfig zapcore.EncoderConfig `json:"encoderConfig"`
 	// OutputPaths is a list of URLs or file paths to write logging output to.
 	// See Open for details.
 	OutputPaths []string `json:"output_paths"`
@@ -59,4 +69,11 @@ func prepareConfig(src Config, dest *zap.Config) error {
 	}
 
 	return nil
+}
+
+func setTimeEncoder(c *zap.Config) {
+	c.EncoderConfig.TimeKey = timeKey
+	c.EncoderConfig.EncodeTime = func(t time.Time, encoder zapcore.PrimitiveArrayEncoder) {
+		encoder.AppendString(t.UTC().Format(time.RFC3339))
+	}
 }
