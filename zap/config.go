@@ -45,9 +45,8 @@ type Config struct {
 	InitialFields map[string]interface{} `json:"initial_fields"`
 }
 
-func prepareConfig(src Config, dest *zap.Config) error {
+func prepareConfig(src Config, dest *zap.Config) {
 	dest.Level = src.Level
-
 	dest.DisableCaller = src.DisableCaller
 	dest.DisableStacktrace = src.DisableStacktrace
 
@@ -65,10 +64,7 @@ func prepareConfig(src Config, dest *zap.Config) error {
 
 	if len(src.InitialFields) != 0 {
 		dest.InitialFields = src.InitialFields
-
 	}
-
-	return nil
 }
 
 func setTimeEncoder(c *zap.Config) {
