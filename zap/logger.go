@@ -11,11 +11,8 @@ import (
 // CreateLogger is a wrapping constructor which produces zap.Logger in a customised form based on provided config.
 func CreateLogger(config Config) (*zap.Logger, error) {
 	c := zap.NewProductionConfig()
-
 	setTimeEncoder(&c)
-	if err := prepareConfig(config, &c); err != nil {
-		return nil, fmt.Errorf("preparing config: %w", err)
-	}
+	prepareConfig(config, &c)
 
 	l, err := c.Build()
 	if err != nil {
@@ -31,6 +28,5 @@ func MustCreateLogger(config Config) *zap.Logger {
 	if err != nil {
 		panic(err)
 	}
-
 	return l
 }
