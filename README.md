@@ -1,3 +1,5 @@
+⚠ This repository has been archived, as we are now using standard log/slog logger instead.
+
 # STRV logging
 
 ![Latest release][release]
