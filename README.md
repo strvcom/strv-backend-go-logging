@@ -1,4 +1,4 @@
-⚠ This repository has been archived, as we are now using standard log/slog logger instead.
+⚠️ This repository has been archived, as we are now using standard log/slog logger instead.
 
 # STRV logging
 
